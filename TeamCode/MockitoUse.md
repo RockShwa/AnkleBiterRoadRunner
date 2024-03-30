@@ -17,6 +17,7 @@
 - Don't mock value objects 
 - Don't mock everything
 - Show love with your tests!
+- Stubs are FAKES, Spy's use the real methods, Mocks implement the methods 
 
 ## Mocking
 ~~~ java
