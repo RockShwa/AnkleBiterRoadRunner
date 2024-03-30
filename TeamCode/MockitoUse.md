@@ -374,7 +374,7 @@ because the user is not required to provide an instance of the abstract class
 ~~~
 
 ## Mockito JUnit Rule
-- Annotate JUnit test class with @RunWith (MockitoJUnitRunner.class)
+- Annotate JUnit test class with @ExtendWith(MockitoExtension.class)
 - OR Invoking MockitoAnnotations.openMocks(Object) in @Before
 - OR @Rule public MockitoRule mockito = MockitoJUnit.rule();
 

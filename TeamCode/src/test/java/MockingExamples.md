@@ -1,18 +1,5 @@
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import java.util.*;
-
+# Mockito Examples (All of these Pass)
+~~~ java
 @ExtendWith(MockitoExtension.class)
 public class MockingExample {
 
@@ -106,3 +93,4 @@ public class MockingExample {
     // Inject a Mock into a spy using the constructor
 
 }
+~~~
