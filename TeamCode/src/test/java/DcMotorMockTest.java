@@ -21,6 +21,7 @@ public class DcMotorMockTest {
 
     @Test
     public void doesMotorPositionAngleGetConvertedToDegrees() {
+        // Need to test when ticks is greater than 538 and divide by 0 cases (maybe change angle thing to a double)
         MockingExampleDrive drive = new MockingExampleDrive(motor);
         // Get DcMotor currentPosition and convert that to degrees
         // 360 degrees = 538 ticks per revolution
