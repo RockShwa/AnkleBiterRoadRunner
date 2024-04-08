@@ -21,7 +21,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 // Add servo feedback when out of bounds?
 // Find a way to verify the enum without a public variable
 // Does setPosition use ticks or degrees?
-// Change tests to verify depending
+// Add servo range to IntakeConstants
+// Add mode that starts at 150 and goes down in small increments to 175 (ground level) and then goes in reverse for 2 secs
 @ExtendWith(MockitoExtension.class)
 public class IntakeTests {
     @Mock
@@ -55,5 +56,35 @@ public class IntakeTests {
         intake.update(gamepad1);
         assertEquals(Intake.ServoState.TO_STACK, intake.servoState);
     }
+
+    @Test
+    public void servoCanSwitchBackToHolding() {
+        intake.servoState = Intake.ServoState.TO_STACK;
+        Gamepad gamepad1 = new Gamepad();
+        gamepad1.b = true;
+        intake.update(gamepad1);
+        assertEquals(Intake.ServoState.HOLDING, intake.servoState);
+    }
+
+    // This test needs some help
+//    @Test
+//    public void servoCanMoveInSmallIncsTo160() {
+//        Gamepad gamepad1 = new Gamepad();
+//        when(axonServo.getPosition()).thenReturn(150.0);
+//        double curPos = axonServo.getPosition();
+//
+//        gamepad1.x = true;
+//        intake.update(gamepad1);
+//        gamepad1.x = false;
+//
+//        when(axonServo.getPosition()).thenReturn(curPos + 5);
+//        curPos = axonServo.getPosition();
+//
+//        gamepad1.x = true;
+//        intake.update(gamepad1);
+//        gamepad1.x = false;
+//
+//        assertEquals(160, axonServo.getPosition());
+//    }
 
 }

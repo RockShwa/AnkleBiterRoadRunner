@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Intake {
     public ServoState servoState = ServoState.HOLDING;
-    private DcMotorEx intakeMotor;
     private Servo axonIntake;
 
     // constructor, deal with hardware map
@@ -31,6 +30,13 @@ public class Intake {
                 break;
             case TO_STACK:
                 axonIntake.setPosition(150);
+                if (gamepad1.b) {
+                    servoState = servoState.HOLDING;
+                }
+                if (gamepad1.x) {
+                    double curPos = axonIntake.getPosition();
+                    axonIntake.setPosition(curPos + 5);
+                }
                 break;
         }
     }
@@ -39,7 +45,6 @@ public class Intake {
         HOLDING,
         TO_STACK,
         TO_GROUND
-
     }
 
 }
