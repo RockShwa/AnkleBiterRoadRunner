@@ -15,7 +15,9 @@ public class Intake {
     }
 
     public void setServoIfValidPosition(double servoPos) {
-        if (servoPos > servoAngleToPos(30) && servoPos < servoAngleToPos(150)) {
+        if (servoState.equals(ServoState.TO_STACK) && servoPos >= servoAngleToPos(30) && servoPos <= servoAngleToPos(150)) {
+            axonIntake.setPosition(servoPos);
+        } else if (servoState.equals(ServoState.TO_GROUND) && servoPos >= servoAngleToPos(30) && servoPos <= servoAngleToPos(180)) {
             axonIntake.setPosition(servoPos);
         }
     }
@@ -54,6 +56,9 @@ public class Intake {
     }
 
     public static double servoAngleToPos(double angle) {
+        if (angle == 0) {
+            return 0.0;
+        }
         // turns desired angle into a 0-1 value servo understands
         double pos = 180/angle;
         pos = Math.round((1/pos)*10000d)/10000d;
