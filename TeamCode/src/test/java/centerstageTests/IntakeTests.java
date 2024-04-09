@@ -18,11 +18,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 //        1) Mode 1: dropdown to stack (30-150)
 //        2) Mode 2: dropdown to ground (30-180)
 //        3) Mode 3: holding (at 30)
-// Add servo feedback when out of bounds?
 // Find a way to verify the enum without a public variable
-// Does setPosition use ticks or degrees?
-// Add servo range to IntakeConstants
-// Add mode that starts at 150 and goes down in small increments to 175 (ground level) and then goes in reverse for 2 secs
+// Add servo range to IntakeConstants?
+// Goes in reverse for 2 secs
+// Ensure that the right trigger goes to pos when clicked once, not when held down
+
 @ExtendWith(MockitoExtension.class)
 public class IntakeTests {
     @Mock
@@ -36,14 +36,14 @@ public class IntakeTests {
     }
     @Test
     public void testThatServoOnlyMoves30To150ToStack() {
-        double servoPos = 40;
+        double servoPos = Intake.servoAngleToPos(40);
         intake.setServoIfValidPosition(servoPos);
         verify(axonServo, times(1)).setPosition(servoPos);
     }
 
     @Test
     public void testThatServoWontMoveIfPosOutOfRange() {
-        double servoPos = 180;
+        double servoPos = Intake.servoAngleToPos(180);
         intake.setServoIfValidPosition(servoPos);
         verify(axonServo, never()).setPosition(servoPos);
     }
@@ -65,26 +65,53 @@ public class IntakeTests {
         intake.update(gamepad1);
         assertEquals(Intake.ServoState.HOLDING, intake.servoState);
     }
+    @Test
+    public void servoGoesToFullPosWhenTriggerClicked() {
+        Gamepad gamepad1 = new Gamepad();
+        intake.servoState = Intake.ServoState.TO_STACK;
 
-    // This test needs some help
-//    @Test
-//    public void servoCanMoveInSmallIncsTo160() {
-//        Gamepad gamepad1 = new Gamepad();
-//        when(axonServo.getPosition()).thenReturn(150.0);
-//        double curPos = axonServo.getPosition();
-//
-//        gamepad1.x = true;
-//        intake.update(gamepad1);
-//        gamepad1.x = false;
-//
-//        when(axonServo.getPosition()).thenReturn(curPos + 5);
-//        curPos = axonServo.getPosition();
-//
-//        gamepad1.x = true;
-//        intake.update(gamepad1);
-//        gamepad1.x = false;
-//
-//        assertEquals(160, axonServo.getPosition());
-//    }
+        gamepad1.right_trigger = 1;
+        intake.update(gamepad1);
 
+        verify(axonServo).setPosition(eq(Intake.servoAngleToPos(175)));
+    }
+
+    @Test
+    public void servoMovesInSmallIncsTo175() {
+        Gamepad gamepad1 = new Gamepad();
+        intake.servoState = Intake.ServoState.TO_STACK;
+        when(axonServo.getPosition()).thenReturn(Intake.servoAngleToPos(150));
+        double updatePos = axonServo.getPosition();
+
+        for (float i = .1f; i <= .5f; i += .1f) {
+            when(axonServo.getPosition()).thenReturn(updatePos);
+            gamepad1.right_trigger = i;
+            intake.update(gamepad1);
+            updatePos = updatePos + Intake.servoAngleToPos(5);
+        }
+        verify(axonServo).setPosition(Intake.servoAngleToPos(150) + Intake.servoAngleToPos(5)*5);
+    }
+
+    @Test
+    public void servoMovesInSmallIncsNotPast175() {
+        Gamepad gamepad1 = new Gamepad();
+        intake.servoState = Intake.ServoState.TO_STACK;
+        when(axonServo.getPosition()).thenReturn(Intake.servoAngleToPos(150));
+        double updatePos = axonServo.getPosition();
+
+        for (float i = .1f; i <= .6f; i += .1f) {
+            when(axonServo.getPosition()).thenReturn(updatePos);
+            gamepad1.right_trigger = i;
+            intake.update(gamepad1);
+            updatePos = updatePos + Intake.servoAngleToPos(5);
+        }
+        verify(axonServo, times(5)).setPosition(anyDouble());
+    }
+
+    @Test
+    public void testServoAngleToPos() {
+        double pos = Intake.servoAngleToPos(150);
+        double expected = 0.8333;
+        assertEquals(expected, pos);
+    }
 }

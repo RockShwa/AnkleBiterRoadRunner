@@ -15,7 +15,7 @@ public class Intake {
     }
 
     public void setServoIfValidPosition(double servoPos) {
-        if (servoPos > 30 && servoPos < 150) {
+        if (servoPos > servoAngleToPos(30) && servoPos < servoAngleToPos(150)) {
             axonIntake.setPosition(servoPos);
         }
     }
@@ -23,19 +23,25 @@ public class Intake {
     public void update(Gamepad gamepad1) {
         switch (servoState) {
             case HOLDING:
-                axonIntake.setPosition(30);
+                axonIntake.setPosition(servoAngleToPos(30));
                 if (gamepad1.a) {
                     servoState = ServoState.TO_STACK;
+                    axonIntake.setPosition(servoAngleToPos(150));
                 }
                 break;
             case TO_STACK:
-                axonIntake.setPosition(150);
                 if (gamepad1.b) {
                     servoState = servoState.HOLDING;
                 }
-                if (gamepad1.x) {
+                if (gamepad1.right_trigger == 1) {
+                    axonIntake.setPosition(servoAngleToPos(175));
+                }
+                if (gamepad1.right_trigger < 1) {
                     double curPos = axonIntake.getPosition();
-                    axonIntake.setPosition(curPos + 5);
+                    if (curPos < servoAngleToPos(175)) {
+                        double updatePos = Math.round((curPos + servoAngleToPos(5)) * 10000d) / 10000d;
+                        axonIntake.setPosition(updatePos);
+                    }
                 }
                 break;
         }
@@ -45,6 +51,13 @@ public class Intake {
         HOLDING,
         TO_STACK,
         TO_GROUND
+    }
+
+    public static double servoAngleToPos(double angle) {
+        // turns desired angle into a 0-1 value servo understands
+        double pos = 180/angle;
+        pos = Math.round((1/pos)*10000d)/10000d;
+        return pos;
     }
 
 }
