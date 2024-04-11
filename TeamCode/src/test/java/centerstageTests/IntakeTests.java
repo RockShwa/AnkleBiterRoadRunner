@@ -17,7 +17,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 // TODO List:
 // -- Questions --
-// Trigger and button functionality the same for both the TO_STACK and TO_GROUND state?
 // Do you want a button that switches the state back to HOLDING?
 
 // -- Functionality --
@@ -28,7 +27,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
     // when pressed again, should go back to top -> DONE
 // Trigger -> Treat like a button, turns on intaking rollers if pressed, once trigger is released, should go back to
     // init pos -> DONE
-    // reverse for 2 seconds
+    // reverse for 2 seconds -> AHAHA DONE
     // on & off values: >= 0.5 -> DONE
     // When turned on, should reset the direction of the roller motor to be forward -> DONE
     // if want to go back to intaking, should not have to wait for seconds to be over
@@ -245,10 +244,12 @@ public class IntakeTests {
     public void whenTriggerReleasedRollerMotorReversesFor2Secs() {
         // timestamp, when motor starts, when motor stops, subtract to see if in range to verify
         double startTime = System.currentTimeMillis();
+        System.out.println("Test Start Time: " + startTime);
         intake.runMotorFor2Seconds();
         double endTime = System.currentTimeMillis();
+        System.out.println("Test End Time: " + endTime);
         double elapsedTime = endTime - startTime;
-        System.out.println(elapsedTime);
+        System.out.println("Test Elapsed Time: " + elapsedTime);
         assertTrue(elapsedTime <= 2100 && elapsedTime >= 1900);
     }
 }

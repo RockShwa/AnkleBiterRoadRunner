@@ -18,7 +18,7 @@ public class Intake {
     private boolean triggerWasPressed = false;
     private boolean fullExtensionWasPressed = false;
 
-    private double startTime = 0;
+    private long startTime = 0;
 
     // constructor, deal with hardware map
     public Intake(Servo axonIntake, DcMotorEx motor, Servo topBucketServo, Servo bottomBucketServo) {
@@ -62,7 +62,6 @@ public class Intake {
                         axonServoIntake.setPosition(pos);
                     } else {
                         double pos = axonServoIntake.getPosition();
-                        System.out.println(pos);
                         pos = pos + servoAngleToPos(10);
                         axonServoIntake.setPosition(pos);
                     }
@@ -87,8 +86,8 @@ public class Intake {
 
     public void runMotorFor2Seconds() {
         startTime = System.currentTimeMillis();
-        System.out.println(startTime);
-        while ((System.currentTimeMillis() - startTime >= 1900) && (System.currentTimeMillis() - startTime <= 2200)) {
+        System.out.println("Method Start Time: " + startTime);
+        while ((System.currentTimeMillis() - startTime >= 0) && (System.currentTimeMillis() - startTime <= 2000)) {
             intakeRollerMotor.setPower(1);
         }
         intakeRollerMotor.setPower(0);
