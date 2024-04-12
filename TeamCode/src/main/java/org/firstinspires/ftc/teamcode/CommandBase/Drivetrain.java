@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.CenterstageRobot.CommandBase;
+package org.firstinspires.ftc.teamcode.CommandBase;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;

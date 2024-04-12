@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.CenterstageRobot.CommandBase;
+package org.firstinspires.ftc.teamcode.CommandBase;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;

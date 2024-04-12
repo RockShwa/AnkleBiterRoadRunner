@@ -1,11 +1,8 @@
 # Programming Workshop Notes
-- Github Copilot, all the good extensions :)
 - Commit early and commit often
-- Alex's Command classes are for the subsystems, he wrote his own commands
-- Gradle stuff for FTCLib
 
 ## Questions
-- How to fork multiple robot controllers/road runner, Import repository and copy FTC Road Runner url. You can also download it, but...
+- How to fork multiple robot controllers/road runner -> Import repository and copy FTC Road Runner url. You can also download it, but...
 
 ## OpMode
 - OpMode and LinearOpMode have access to HardwareMap, Telemetry, and Gamepad
