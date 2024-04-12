@@ -19,12 +19,12 @@ public class Intake {
     private Servo bottomBucketServo;
     private boolean triggerWasPressed = false;
     private boolean fullExtensionWasPressed = false;
+    private boolean incrementServoWasPressed = false;
 
     private long startTime = 0;
 
     //private GamepadMapping controls;
 
-    // constructor, deal with hardware map
     public Intake(Servo axonIntake, DcMotorEx motor, Servo topBucketServo, Servo bottomBucketServo, GamepadMapping controls) {
         this.axonServoIntake = axonIntake;
         this.intakeRollerMotor = motor;
@@ -36,14 +36,20 @@ public class Intake {
     public void update(Gamepad gamepad1) {
         switch (servoState) {
             case HOLDING:
+                // set to start pos
                 axonServoIntake.setPosition(servoAngleToPos(30));
+                // right trigger pressed, switch to intaking
                 if (gamepad1.right_trigger >= 0.5f) {
                     servoState = ServoState.INTAKING;
                 }
                 break;
             case INTAKING:
+                // button b, check if toggle, if true, set pos
                 checkIfButtonToggledForFullExtension(gamepad1);
-                if (gamepad1.a) {
+                // This needs some work, have to test with actual robot due to weirdness of servo positions
+                // Also this is going to get WAY cleaner when I use FTC Commands and stuff
+                // Supposed to increment a by 10 to max pos, and then back up to top pos (Intake Constants with states to make this cleaner)
+                if (gamepad1.a && incrementServoWasPressed == false) {
                     if (axonServoIntake.getPosition() == servoAngleToPos(180)) {
                         // does this cause the servo to move to 0 degrees? or just sets the direction?
                         axonServoIntake.setDirection(Servo.Direction.REVERSE);
@@ -54,8 +60,13 @@ public class Intake {
                         double currentPos = axonServoIntake.getPosition();
                         incrementIntakeServoPos(10, currentPos);
                     }
+                    incrementServoWasPressed = true;
                 }
-                if (gamepad1.right_trigger >= 0.5f) {
+                if (!gamepad1.a) {
+                    incrementServoWasPressed = false;
+                }
+                                // If the right trigger is toggled on, reset bucketServos, turn the motor on forward
+                if (gamepad1.right_trigger >= 0.5f && !triggerWasPressed) {
                     resetBucketServos();
                     intakeRollerMotor.setDirection(DcMotorSimple.Direction.FORWARD);
                     intakeRollerMotor.setPower(1);

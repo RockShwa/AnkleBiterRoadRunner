@@ -108,10 +108,13 @@ public class IntakeTests {
 
         gamepad1.a = true;
         intake.update(gamepad1);
+        gamepad1.a = false;
+        intake.update(gamepad1);
 
         double updatePos = axonServo.getPosition() + Intake.servoAngleToPos(10);
         when(axonServo.getPosition()).thenReturn(updatePos);
 
+        gamepad1.a = true;
         intake.update(gamepad1);
 
         verify(axonServo).setPosition(eq(Intake.servoAngleToPos(150)));
