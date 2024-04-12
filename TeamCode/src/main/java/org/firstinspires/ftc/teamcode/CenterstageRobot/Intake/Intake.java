@@ -65,12 +65,13 @@ public class Intake {
                 if (!gamepad1.a) {
                     incrementServoWasPressed = false;
                 }
-                                // If the right trigger is toggled on, reset bucketServos, turn the motor on forward
+                // If the right trigger is toggled on, reset bucketServos, turn the motor on forward
                 if (gamepad1.right_trigger >= 0.5f && !triggerWasPressed) {
                     resetBucketServos();
                     intakeRollerMotor.setDirection(DcMotorSimple.Direction.FORWARD);
                     intakeRollerMotor.setPower(1);
                     triggerWasPressed = true;
+                // Trigger released, reset intake to starting pos and then run motor in reverse for 2 seconds
                 } else if (triggerWasPressed && gamepad1.right_trigger < 0.5f) {
                     axonServoIntake.setPosition(servoAngleToPos(30));
                     triggerWasPressed = false;
@@ -81,6 +82,7 @@ public class Intake {
                 break;
             case OUTAKING:
         }
+        // Emergency reset to holding state
         if (gamepad1.x) {
             servoState = ServoState.HOLDING;
         }
