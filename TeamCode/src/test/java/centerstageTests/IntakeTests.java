@@ -123,16 +123,18 @@ public class IntakeTests {
     // TODO: Test Servo Behavior in MakerSpace
     @Test
     public void servoMovesDownToLowestPosAndThenBackUpInIncrementsOfButtonClick() {
-        gamepad1 = new Gamepad();
         intake.servoState = Intake.ServoState.INTAKING;
         when(axonServo.getPosition()).thenReturn(Intake.servoAngleToPos(170));
 
         gamepad1.a = true;
         intake.update(gamepad1); // moves it to 180
+        gamepad1.a = false;
+        intake.update(gamepad1);
 
         double updatePos = axonServo.getPosition() + Intake.servoAngleToPos(10);
         when(axonServo.getPosition()).thenReturn(updatePos);
 
+        gamepad1.a = true;
         intake.update(gamepad1); // this should make servo go back up
 
         verify(axonServo).setPosition(eq(Intake.servoAngleToPos(10)));
