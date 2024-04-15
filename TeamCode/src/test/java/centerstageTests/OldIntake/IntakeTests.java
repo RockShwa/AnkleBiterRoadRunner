@@ -50,11 +50,9 @@ public class IntakeTests {
     private Intake intake;
     private Gamepad gamepad1;
 
-    private GamepadMapping controls;
-
     //@BeforeEach
     public void setUp() {
-        intake = new Intake(axonServo, intakeRollerMotor, topBucketServo, bottomBucketServo, controls);
+        intake = new Intake(axonServo, intakeRollerMotor, topBucketServo, bottomBucketServo);
         gamepad1 = new Gamepad();
     }
 

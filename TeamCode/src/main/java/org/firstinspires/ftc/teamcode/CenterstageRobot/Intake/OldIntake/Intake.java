@@ -20,9 +20,8 @@ public class Intake {
 
     private long startTime = 0;
 
-    //private GamepadMapping controls;
 
-    public Intake(Servo axonIntake, DcMotorEx motor, Servo topBucketServo, Servo bottomBucketServo, GamepadMapping controls) {
+    public Intake(Servo axonIntake, DcMotorEx motor, Servo topBucketServo, Servo bottomBucketServo) {
         this.axonServoIntake = axonIntake;
         this.intakeRollerMotor = motor;
         this.topBucketServo = topBucketServo;
