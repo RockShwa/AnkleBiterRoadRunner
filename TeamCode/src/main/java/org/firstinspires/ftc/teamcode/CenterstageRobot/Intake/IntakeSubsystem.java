@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.CenterstageRobot.util.StatesSubsystem;
+
 public class IntakeSubsystem extends SubsystemBase {
     private final Servo intakeAxonServo;
     private final DcMotorEx intakeRollerMotor;
@@ -16,16 +18,17 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeRollerMotor = rollerMotor;
         this.topBucketServo = topBucketServo;
         this.bottomBucketServo = bottomBucketServo;
+
     }
 
     public void extend() {
-        intakeAxonServo.setPosition(servoAngleToPos(180));
+        intakeAxonServo.setPosition(StatesSubsystem.IntakeState.INTAKE_EXTENDED.getAxonPos());
     }
 
     // This may not work on the actual robot due to the getPosition() only returning the position you sent it
     // It actually might work because there are encoders on axon servos
     public void incrementPos() {
-        if (intakeAxonServo.getPosition() == servoAngleToPos(180)) {
+        if (intakeAxonServo.getPosition() == StatesSubsystem.IntakeState.INTAKE_EXTENDED.getAxonPos()) {
             // does this cause the servo to move to 0 degrees? or just sets the direction?
             intakeAxonServo.setDirection(Servo.Direction.REVERSE);
             intakeAxonServo.setPosition(0);
@@ -53,7 +56,18 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void resetAxonPosition() {
-        intakeAxonServo.setPosition(servoAngleToPos(30));
+        intakeAxonServo.setPosition(StatesSubsystem.IntakeState.INTAKE_START.getAxonPos());
+    }
+
+    public void intakeOn() {
+        resetIntake();
+        intakeRollerMotor.setPower(1);
+    }
+
+    public void resetAll() {
+        resetAxonPosition();
+        intakeAxonServo.setDirection(Servo.Direction.FORWARD);
+        resetIntake();
     }
 
     // helper method for this class and users :)
@@ -65,10 +79,5 @@ public class IntakeSubsystem extends SubsystemBase {
         double pos = 180/angle;
         pos = 1/pos;
         return pos;
-    }
-
-    public void intakeOn() {
-        intakeRollerMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        intakeRollerMotor.setPower(1);
     }
 }

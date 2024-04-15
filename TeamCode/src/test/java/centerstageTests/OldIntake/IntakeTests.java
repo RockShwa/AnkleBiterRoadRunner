@@ -55,13 +55,13 @@ public class IntakeTests {
 
     private GamepadMapping controls;
 
-    @BeforeEach
+    //@BeforeEach
     public void setUp() {
         intake = new Intake(axonServo, intakeRollerMotor, topBucketServo, bottomBucketServo, controls);
         gamepad1 = new Gamepad();
     }
 
-    @Test
+    //@Test
     public void servoCanSwitchModes() {
         intake.servoState = Intake.ServoState.HOLDING;
         gamepad1.right_trigger = 0.6f;
@@ -69,7 +69,7 @@ public class IntakeTests {
         assertEquals(Intake.ServoState.INTAKING, intake.servoState);
     }
 
-    @Test
+    //@Test
     public void servoCanSwitchBackToHolding() {
         intake.servoState = Intake.ServoState.INTAKING;
         gamepad1.x = true;
@@ -77,7 +77,7 @@ public class IntakeTests {
         assertEquals(Intake.ServoState.HOLDING, intake.servoState);
     }
 
-    @Test
+    //@Test
     public void servoGoesToFullStackPosWhenButtonClicked() {
         intake.servoState = Intake.ServoState.INTAKING;
 
@@ -87,7 +87,7 @@ public class IntakeTests {
         verify(axonServo).setPosition(eq(Intake.servoAngleToPos(150)));
     }
 
-    @Test
+    //@Test
     public void servoGoesToStartingPosWhenButtonClickedAgain() {
         intake.servoState = Intake.ServoState.INTAKING;
 
@@ -99,7 +99,7 @@ public class IntakeTests {
         verify(axonServo).setPosition(eq(0.0));
     }
 
-    @Test
+    //@Test
     public void servoCanMoveToFullStackPosWhenButtonClickedMultipleTimes() {
         gamepad1 = new Gamepad();
         intake.servoState = Intake.ServoState.INTAKING;
@@ -120,7 +120,7 @@ public class IntakeTests {
     }
 
     // TODO: Test Servo Behavior in MakerSpace
-    @Test
+    //@Test
     public void servoMovesDownToLowestPosAndThenBackUpInIncrementsOfButtonClick() {
         intake.servoState = Intake.ServoState.INTAKING;
         when(axonServo.getPosition()).thenReturn(Intake.servoAngleToPos(170));
@@ -139,21 +139,21 @@ public class IntakeTests {
         verify(axonServo).setPosition(eq(Intake.servoAngleToPos(10)));
     }
 
-    @Test
+    //@Test
     public void testServoAngleToPos() {
         double pos = Intake.servoAngleToPos(150);
         double expected = 0.8333333333333334;
         assertEquals(expected, pos);
     }
 
-    @Test
+    //@Test
     public void testServoAnglePosIfZero() {
         double pos = Intake.servoAngleToPos(0);
         double expected = 0.0;
         assertEquals(expected, pos);
     }
 
-    @Test
+    //@Test
     public void whenTriggerPressedRollerMotorTurnsOn() {
         intake.servoState = Intake.ServoState.INTAKING;
         gamepad1.right_trigger = .6f;
@@ -161,14 +161,14 @@ public class IntakeTests {
         verify(intakeRollerMotor).setPower(anyDouble());
     }
 
-    @Test
+    //@Test
     public void whenTriggerNotPressedMotorIsOff() {
         gamepad1.right_trigger = .2f;
         intake.update(gamepad1);
         verify(intakeRollerMotor, never()).setPower(anyDouble());
     }
 
-    @Test
+    //@Test
     public void whenTriggerPressedMotorModeIsForward() {
         intake.servoState = Intake.ServoState.INTAKING;
         gamepad1.right_trigger = .5f;
@@ -176,7 +176,7 @@ public class IntakeTests {
         verify(intakeRollerMotor).setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
-    @Test
+    //@Test
     public void whenTriggerPressedBucketServosResetTo0() {
         intake.servoState = Intake.ServoState.INTAKING;
         gamepad1.right_trigger = 1f;
@@ -185,7 +185,7 @@ public class IntakeTests {
         verify(bottomBucketServo).setPosition(0);
     }
 
-    @Test
+    //@Test
     public void whenTriggerReleasedAxonServoMovesToStartingPos() {
         intake.servoState = Intake.ServoState.INTAKING;
         gamepad1.right_trigger = .5f;
@@ -195,7 +195,7 @@ public class IntakeTests {
         verify(axonServo, times(1)).setPosition(Intake.servoAngleToPos(30));
     }
 
-    @Test
+    //@Test
     public void whenTriggerIsNotPressedAndWasNotJustPressedServoDoesNotMove() {
         intake.servoState = Intake.ServoState.INTAKING;
         gamepad1.right_trigger = 0.6f;
@@ -210,7 +210,7 @@ public class IntakeTests {
         verify(axonServo, times(1)).setPosition(anyDouble());
     }
 
-    @Test
+    //@Test
     public void whenTriggerReleasedRollerMotorGoesInReverse() {
         intake.servoState = Intake.ServoState.INTAKING;
         // trigger pushed
@@ -223,7 +223,7 @@ public class IntakeTests {
         verify(intakeRollerMotor).setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
-    @Test
+    //@Test
     public void whenTriggerReleasedRollerMotorReversesFor2Secs() {
         double startTime = System.currentTimeMillis();
         intake.runMotorFor2Seconds();

@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.OldIntake.Intake;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.util.StatesSubsystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,14 +41,14 @@ public class IntakeSubsystemTests {
     @Test
     public void testServoFullExtension() {
         intakeSub.extend();
-        verify(axonServo).setPosition(Intake.servoAngleToPos(180));
+        verify(axonServo).setPosition(StatesSubsystem.IntakeState.INTAKE_EXTENDED.getAxonPos());
     }
 
     @Test
     public void testServoCanIncrementToFullPos() {
         when(axonServo.getPosition()).thenReturn(Intake.servoAngleToPos(170));
         intakeSub.incrementPos();
-        verify(axonServo).setPosition(Intake.servoAngleToPos(180));
+        verify(axonServo).setPosition(StatesSubsystem.IntakeState.INTAKE_EXTENDED.getAxonPos());
     }
 
     @Test
@@ -82,7 +83,7 @@ public class IntakeSubsystemTests {
     @Test
     public void testServoCanResetPosition() {
         intakeSub.resetAxonPosition();
-        verify(axonServo).setPosition(IntakeSubsystem.servoAngleToPos(30));
+        verify(axonServo).setPosition(StatesSubsystem.IntakeState.INTAKE_START.getAxonPos());
     }
 
     @Test
@@ -104,5 +105,15 @@ public class IntakeSubsystemTests {
         intakeSub.intakeOn();
         verify(intakeRollerMotor).setDirection(DcMotorSimple.Direction.FORWARD);
         verify(intakeRollerMotor).setPower(anyDouble());
+    }
+
+    @Test
+    public void testResetAll() {
+        intakeSub.resetAll();
+        verify(axonServo).setPosition(StatesSubsystem.IntakeState.INTAKE_START.getAxonPos());
+        verify(axonServo).setDirection(Servo.Direction.FORWARD);
+        verify(intakeRollerMotor).setDirection(DcMotorSimple.Direction.FORWARD);
+        verify(topBucketServo).setPosition(0);
+        verify(bottomBucketServo).setPosition(0);
     }
 }

@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.CenterstageRobot.util;
 
+import com.arcrobotics.ftclib.command.SubsystemBase;
+
 import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.IntakeSubsystem;
 
-public class StatesSubsystem {
+public class StatesSubsystem extends SubsystemBase {
     // Need to test for intermediate values
     private static final double[] axonPositions = {IntakeSubsystem.servoAngleToPos(30), IntakeSubsystem.servoAngleToPos(180)};
     public static enum IntakeState {
