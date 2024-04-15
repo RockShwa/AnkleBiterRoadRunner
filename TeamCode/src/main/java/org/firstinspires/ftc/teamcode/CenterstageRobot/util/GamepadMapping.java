@@ -14,14 +14,14 @@ public class GamepadMapping {
     private boolean single;
 
     // --Intake Toggles--
-    public static Toggle fullExtensionToggle;
+    //public static Toggle fullExtensionToggle;
 
     // Intake Functions
     public GamepadMapping(Gamepad gamepad1, Gamepad gamepad2) {
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
 
-        fullExtensionToggle = new Toggle(false);
+        //fullExtensionToggle = new Toggle(false);
     }
 
     public void update() {
@@ -42,7 +42,7 @@ public class GamepadMapping {
         strafe = gamepad1.left_stick_x;
         rotate = gamepad1.right_stick_x;
 
-        fullExtensionToggle.update(gamepad1.b);
+        //fullExtensionToggle.update(gamepad1.b);
     }
 
 

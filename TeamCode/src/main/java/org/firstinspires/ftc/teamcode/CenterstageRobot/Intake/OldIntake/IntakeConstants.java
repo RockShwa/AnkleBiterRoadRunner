@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.CenterstageRobot.Intake;
 
+import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.OldIntake.Intake;
+
 public class IntakeConstants {
     // Need to test for the intermediate values
     private static double[] axonServoPositions = {Intake.servoAngleToPos(30), 1};
