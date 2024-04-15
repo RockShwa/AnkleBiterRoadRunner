@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.Intake;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.OldIntake.Intake;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.IntakeSubsystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class IntakeSubsystemTests {
@@ -83,7 +82,7 @@ public class IntakeSubsystemTests {
     @Test
     public void testServoCanResetPosition() {
         intakeSub.resetAxonPosition();
-        verify(axonServo).setPosition(0);
+        verify(axonServo).setPosition(IntakeSubsystem.servoAngleToPos(30));
     }
 
     @Test
@@ -98,5 +97,12 @@ public class IntakeSubsystemTests {
         double pos = IntakeSubsystem.servoAngleToPos(0);
         double expected = 0.0;
         assertEquals(expected, pos);
+    }
+
+    @Test
+    public void testMotorNormalIntakeModeCanTurnOn() {
+        intakeSub.intakeOn();
+        verify(intakeRollerMotor).setDirection(DcMotorSimple.Direction.FORWARD);
+        verify(intakeRollerMotor).setPower(anyDouble());
     }
 }

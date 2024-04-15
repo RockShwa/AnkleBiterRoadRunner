@@ -1,5 +1,5 @@
-package centerstageTests;
-import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.Intake;
+package centerstageTests.OldIntake;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.OldIntake.Intake;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.util.GamepadMapping;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 // TODO List:
 // -- Questions --

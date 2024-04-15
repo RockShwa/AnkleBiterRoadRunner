@@ -23,6 +23,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     // This may not work on the actual robot due to the getPosition() only returning the position you sent it
+    // It actually might work because there are encoders on axon servos
     public void incrementPos() {
         if (intakeAxonServo.getPosition() == servoAngleToPos(180)) {
             // does this cause the servo to move to 0 degrees? or just sets the direction?
@@ -52,7 +53,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void resetAxonPosition() {
-        intakeAxonServo.setPosition(0);
+        intakeAxonServo.setPosition(servoAngleToPos(30));
     }
 
     // helper method for this class and users :)
@@ -64,5 +65,10 @@ public class IntakeSubsystem extends SubsystemBase {
         double pos = 180/angle;
         pos = 1/pos;
         return pos;
+    }
+
+    public void intakeOn() {
+        intakeRollerMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        intakeRollerMotor.setPower(1);
     }
 }

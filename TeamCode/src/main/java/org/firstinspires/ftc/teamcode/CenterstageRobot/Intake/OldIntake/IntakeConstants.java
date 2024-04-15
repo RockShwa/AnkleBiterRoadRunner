@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.CenterstageRobot.Intake;
+package org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.OldIntake;
 
 import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.OldIntake.Intake;
 

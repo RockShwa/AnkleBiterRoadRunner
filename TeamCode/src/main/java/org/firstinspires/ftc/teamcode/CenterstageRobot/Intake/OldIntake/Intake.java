@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.CenterstageRobot.Intake;
+package org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.OldIntake;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -111,7 +111,7 @@ public class Intake {
             axonServoIntake.setPosition(servoAngleToPos(150));
             fullExtensionWasPressed = true;
         } else if (fullExtensionWasPressed && gamepad1.b) {
-            axonServoIntake.setPosition(0.0);
+            axonServoIntake.setPosition(servoAngleToPos(30));
             fullExtensionWasPressed = false;
         }
     }
