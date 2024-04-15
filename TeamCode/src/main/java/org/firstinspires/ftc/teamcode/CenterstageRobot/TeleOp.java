@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.IntakeHardware;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.util.StatesSubsystem;
 
@@ -22,10 +23,11 @@ public class TeleOp extends CommandOpMode {
 
     // -- Hardware (Can I put HardwareMap in states and still use tests?) --
     // Some init class for each subsystem?
-    private Servo intakeAxonServo;
-    private DcMotorEx intakeRollerMotor;
-    private Servo topBucketServo;
-    private Servo bottomBucketServo;
+//    private Servo intakeAxonServo;
+//    private DcMotorEx intakeRollerMotor;
+//    private Servo topBucketServo;
+//    private Servo bottomBucketServo;
+    private IntakeHardware intakeHardware;
 
     // -- Gamepad --
     private GamepadEx driverPad;
@@ -43,13 +45,10 @@ public class TeleOp extends CommandOpMode {
         CommandScheduler.getInstance().reset(); // reset scheduler
         driverPad = new GamepadEx(gamepad1);
 
-        intakeAxonServo = hardwareMap.get(Servo.class, "intake_servo");
-        intakeRollerMotor = hardwareMap.get(DcMotorEx.class, "intake_motor");
-        topBucketServo = hardwareMap.get(Servo.class, "top_bucket_servo");
-        bottomBucketServo = hardwareMap.get(Servo.class, "bottom_bucket_servo");
+        intakeHardware = new IntakeHardware(hardwareMap);
 
         states = new StatesSubsystem();
-        intake = new IntakeSubsystem(intakeAxonServo, intakeRollerMotor, topBucketServo, bottomBucketServo);
+        intake = new IntakeSubsystem(intakeHardware);
 
         register(states, intake);
 

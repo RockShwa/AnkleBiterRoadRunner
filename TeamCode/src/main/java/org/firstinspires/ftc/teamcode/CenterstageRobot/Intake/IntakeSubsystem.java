@@ -21,6 +21,13 @@ public class IntakeSubsystem extends SubsystemBase {
 
     }
 
+    public IntakeSubsystem(IntakeHardware intakeHardware) {
+        intakeAxonServo = intakeHardware.intakeAxonServo;
+        intakeRollerMotor = intakeHardware.intakeRollerMotor;
+        topBucketServo = intakeHardware.topBucketServo;
+        bottomBucketServo = intakeHardware.bottomBucketServo;
+    }
+
     public void extend() {
         intakeAxonServo.setPosition(StatesSubsystem.IntakeState.INTAKE_EXTENDED.getAxonPos());
     }
