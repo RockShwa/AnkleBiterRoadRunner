@@ -57,7 +57,6 @@ public class TeleOp extends CommandOpMode {
         incrementIntake = driverPad.getGamepadButton(GamepadKeys.Button.A);
         fullExtendIntake = driverPad.getGamepadButton(GamepadKeys.Button.B);
 
-        // Actual TeleOp Stuff
 
         // When pressed, turn on extend, when pressed again, do resetAxon
         // Not sure if this is correct method, we shall see
@@ -70,14 +69,15 @@ public class TeleOp extends CommandOpMode {
                 new InstantCommand(() -> intake.incrementPos())
         );
 
+        // This is apparently set to be interruptable, test that later?
         intakeButton.whenActive(
                 new InstantCommand(() -> intake.intakeOn())
         )
                 .whenInactive(
                         new SequentialCommandGroup(
                                 new InstantCommand(() -> states.changeIntakeState(StatesSubsystem.IntakeState.REVERSE)),
-                                new InstantCommand(() -> intake.resetAxonPosition()),
-                                new InstantCommand(() -> intake.runMotorInReverseFor2Seconds())
+                                new InstantCommand(() -> intake.runMotorInReverseFor2Seconds()),
+                                new InstantCommand(() -> intake.resetAxonPosition())
                         )
                 );
     }

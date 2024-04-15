@@ -74,7 +74,7 @@ public class IntakeSubsystemTests {
 
     @Test
     public void whenResetCalledBucketAndMotorResets() {
-        intakeSub.resetIntake();
+        intakeSub.resetMotorAndBucket();
         verify(topBucketServo).setPosition(0);
         verify(bottomBucketServo).setPosition(0);
         verify(intakeRollerMotor).setDirection(DcMotorSimple.Direction.FORWARD);

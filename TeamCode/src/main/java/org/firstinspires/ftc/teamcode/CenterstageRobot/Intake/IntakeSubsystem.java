@@ -49,25 +49,25 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeRollerMotor.setPower(0);
     }
 
-    public void resetIntake() {
+    public void resetMotorAndBucket() {
         topBucketServo.setPosition(0);
         bottomBucketServo.setPosition(0);
         intakeRollerMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     public void resetAxonPosition() {
+        intakeAxonServo.setDirection(Servo.Direction.FORWARD);
         intakeAxonServo.setPosition(StatesSubsystem.IntakeState.INTAKE_START.getAxonPos());
     }
 
     public void intakeOn() {
-        resetIntake();
+        resetMotorAndBucket();
         intakeRollerMotor.setPower(1);
     }
 
     public void resetAll() {
         resetAxonPosition();
-        intakeAxonServo.setDirection(Servo.Direction.FORWARD);
-        resetIntake();
+        resetMotorAndBucket();
     }
 
     // helper method for this class and users :)
