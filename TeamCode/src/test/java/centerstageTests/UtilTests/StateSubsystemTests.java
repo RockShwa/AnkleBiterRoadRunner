@@ -16,13 +16,13 @@ public class StateSubsystemTests {
     @Test
     public void testIntakeCanSwitchStates() {
         states.changeIntakeState(StatesSubsystem.IntakeState.INTAKE_EXTENDED);
-        assertEquals("INTAKE_EXTENDED", StatesSubsystem.intakeState.name());
+        assertEquals("INTAKE_EXTENDED", states.intakeState.name());
     }
 
     @Test
     public void testIntakeCanReturnPos() {
-        StatesSubsystem.intakeState = StatesSubsystem.IntakeState.INTAKE_START;
-        double actual = StatesSubsystem.intakeState.getAxonPos();
+        states.intakeState = StatesSubsystem.IntakeState.INTAKE_START;
+        double actual = states.intakeState.getAxonPos();
         double expected = IntakeSubsystem.servoAngleToPos(30);
         assertEquals(expected, actual);
     }

@@ -23,7 +23,7 @@ public class StatesSubsystem extends SubsystemBase {
         }
     }
 
-    public static IntakeState intakeState = IntakeState.INTAKE_START;
+    public IntakeState intakeState = IntakeState.INTAKE_START;
 
     public void changeIntakeState(IntakeState newState) {
         intakeState = newState;

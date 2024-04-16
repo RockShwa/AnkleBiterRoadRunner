@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.CenterstageRobot;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.button.Button;
@@ -58,10 +59,9 @@ public class TeleOp extends CommandOpMode {
 
 
         // When pressed, turn on extend, when pressed again, do resetAxon
-        // Not sure if this is correct method, we shall see
         fullExtendIntake.toggleWhenPressed(
-                new InstantCommand(() -> intake.extend()),
-                new InstantCommand(() -> intake.resetAxonPosition())
+                    new InstantCommand(() -> intake.resetAxonPosition()),
+                    new InstantCommand(() -> intake.extend())
         );
 
         incrementIntake.whenPressed(
