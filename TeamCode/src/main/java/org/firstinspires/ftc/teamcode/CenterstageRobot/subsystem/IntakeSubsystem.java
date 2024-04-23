@@ -13,7 +13,8 @@ public class IntakeSubsystem extends SubsystemBase {
     private final Servo topBucketServo;
     private final Servo bottomBucketServo;
 
-    public IntakeSubsystem(final Servo servo, final DcMotorEx rollerMotor, final Servo topBucketServo, final Servo bottomBucketServo) {
+    public IntakeSubsystem(final Servo servo, final DcMotorEx rollerMotor,
+                           final Servo topBucketServo, final Servo bottomBucketServo) {
         intakeAxonServo = servo;
         intakeRollerMotor = rollerMotor;
         this.topBucketServo = topBucketServo;
