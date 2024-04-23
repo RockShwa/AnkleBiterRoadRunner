@@ -1,33 +1,25 @@
-package org.firstinspires.ftc.teamcode.CenterstageRobot;
+package org.firstinspires.ftc.teamcode.CenterstageRobot.opMode;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.button.Button;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.IntakeHardware;
-import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.CenterstageRobot.util.StatesSubsystem;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.hardware.IntakeHardware;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.StatesSubsystem;
 
 public class TeleOp extends CommandOpMode {
     // -- Subsystems --
     private StatesSubsystem states;
     private IntakeSubsystem intake;
 
-    // -- Hardware (Can I put HardwareMap in states and still use tests?) --
-    // Some init class for each subsystem?
-//    private Servo intakeAxonServo;
-//    private DcMotorEx intakeRollerMotor;
-//    private Servo topBucketServo;
-//    private Servo bottomBucketServo;
+    // -- Hardware --
+
     private IntakeHardware intakeHardware;
 
     // -- Gamepad --

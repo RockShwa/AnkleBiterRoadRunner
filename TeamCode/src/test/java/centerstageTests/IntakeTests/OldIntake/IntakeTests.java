@@ -1,5 +1,5 @@
 package centerstageTests.IntakeTests.OldIntake;
-import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.OldIntake.Intake;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.oldCode.oldIntake.Intake;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;

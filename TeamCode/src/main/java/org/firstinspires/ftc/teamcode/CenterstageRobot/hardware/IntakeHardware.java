@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.CenterstageRobot.Intake;
+package org.firstinspires.ftc.teamcode.CenterstageRobot.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;

@@ -1,7 +1,7 @@
 package centerstageTests.UtilTests;
 
-import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.CenterstageRobot.util.StatesSubsystem;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.StatesSubsystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

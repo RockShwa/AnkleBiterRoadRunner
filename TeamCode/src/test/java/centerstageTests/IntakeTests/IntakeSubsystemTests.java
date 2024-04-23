@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.OldIntake.Intake;
-import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.CenterstageRobot.util.StatesSubsystem;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.oldCode.oldIntake.Intake;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.StatesSubsystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

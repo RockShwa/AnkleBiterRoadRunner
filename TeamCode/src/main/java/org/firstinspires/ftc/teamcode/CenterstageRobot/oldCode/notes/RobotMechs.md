@@ -22,3 +22,7 @@ Second mode (reach ground) is from 30 degrees to 180 degrees. 30 is start positi
      1) Mode 1: dropdown to stack (30-150)
      2) Mode 2: dropdown to ground (30-180)
      3) Mode 3: holding (at 30)
+
+## Outtake
+- right_bumper top -> slides going up
+- reset to intake -> left_bumper

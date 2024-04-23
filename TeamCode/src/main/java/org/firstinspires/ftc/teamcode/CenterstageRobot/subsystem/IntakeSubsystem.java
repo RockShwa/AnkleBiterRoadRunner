@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode.CenterstageRobot.Intake;
+package org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.CenterstageRobot.util.StatesSubsystem;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.hardware.IntakeHardware;
 
 public class IntakeSubsystem extends SubsystemBase {
     private final Servo intakeAxonServo;

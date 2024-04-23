@@ -1,6 +1,4 @@
-package org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.OldIntake;
-
-import org.firstinspires.ftc.teamcode.CenterstageRobot.Intake.OldIntake.Intake;
+package org.firstinspires.ftc.teamcode.CenterstageRobot.oldCode.oldIntake;
 
 public class IntakeConstants {
     // Need to test for the intermediate values
