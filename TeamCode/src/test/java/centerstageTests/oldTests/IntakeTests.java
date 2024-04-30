@@ -1,4 +1,4 @@
-package centerstageTests.IntakeTests.OldIntake;
+package centerstageTests.oldTests;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.oldCode.oldIntake.Intake;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

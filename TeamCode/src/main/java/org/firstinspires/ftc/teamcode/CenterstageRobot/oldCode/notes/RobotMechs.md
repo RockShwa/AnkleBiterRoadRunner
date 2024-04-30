@@ -26,3 +26,5 @@ Second mode (reach ground) is from 30 degrees to 180 degrees. 30 is start positi
 ## Outtake
 - right_bumper top -> slides going up
 - reset to intake -> left_bumper
+- wrist servo and arm servos, should be the same pos for the servo (the fact that its an axon doesn't do anything)
+  - however, can't find exact value without a robot soo... just do the functionality and use a guess value
