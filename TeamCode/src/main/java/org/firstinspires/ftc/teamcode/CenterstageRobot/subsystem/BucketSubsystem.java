@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem;
 
+import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 // TODO LIST
-// Put the bucket functions in the intake into here
+// Put the bucket functions in the intake into here (the reset servo ones)
 
-public class BucketSubsystem {
+public class BucketSubsystem extends SubsystemBase {
     private final Servo wristAxon;
     private final Servo bucketServoTop;
     private final Servo bucketServoBottom;
