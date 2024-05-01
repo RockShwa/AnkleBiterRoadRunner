@@ -3,6 +3,7 @@ package centerstageTests.subsystemTests;
 import static org.mockito.Mockito.*;
 
 import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.SlidesSubsystem;
+import org.firstinspires.ftc.teamcode.util.Encoder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,10 +18,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @ExtendWith(MockitoExtension.class)
 public class SlideSubsystemTests {
-    // Slides, two motors, opp of each other, set one to opp position and then treat them as the same (set to equal power)
-    //Spin on same axel, same speed.
-    // Encoder in the motor, have a set input value, like 1000, and then we divide it however many positions we want for the
-    // encoder pos (I think?)
+    // Figure out corner cases for adjust up; like going above limit for slide height
+    // I think I need a transport constants of some sort with Ticks per revolution, max heights, etc.
     @Mock
     DcMotorEx leftSlideMotor;
     @Mock
@@ -44,4 +43,31 @@ public class SlideSubsystemTests {
     }
 
     // We need to iterate through slide heights, best way to do this? Could iterate through with one button, a bumper?
+    @Test
+    public void testIdealAdjustUp() {
+        slideSub.adjustUp();
+        // at starting pos
+        when(rightSlideMotor.getCurrentPosition()).thenReturn(0);
+        when(rightSlideMotor.getCurrentPosition()).thenReturn(0);
+        int liftCurPos = rightSlideMotor.getCurrentPosition();
+        verify(leftSlideMotor).setTargetPosition(liftCurPos + slideSub.pixelTickHeight);
+        verify(rightSlideMotor).setTargetPosition(liftCurPos + slideSub.pixelTickHeight);
+
+    }
+    @Test
+    public void testIdealAdjustDown() {
+        slideSub.adjustDown();
+        when(rightSlideMotor.getCurrentPosition()).thenReturn(300);
+        when(leftSlideMotor.getCurrentPosition()).thenReturn(300);
+        int liftCurPos = rightSlideMotor.getCurrentPosition();
+        verify(leftSlideMotor).setTargetPosition(liftCurPos - slideSub.pixelTickHeight);
+        verify(rightSlideMotor).setTargetPosition(liftCurPos - slideSub.pixelTickHeight);
+    }
+    @Test
+    public void testSetLiftPos() {
+        slideSub.setLiftPosition(100);
+        verify(leftSlideMotor).setTargetPosition(anyInt());
+        verify(rightSlideMotor).setTargetPosition(anyInt());
+    }
+
 }

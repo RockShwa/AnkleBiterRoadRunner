@@ -4,6 +4,8 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.util.Encoder;
+
 // TODO LIST
 // Put the bucket functions in the intake into here (the reset servo ones)
 
