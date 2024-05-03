@@ -11,18 +11,17 @@ public class SlidesSubsystem extends SubsystemBase {
     // Might be good to make an Encoder for the motor later?
     private DcMotorEx leftSlideMotor;
     private DcMotorEx rightSlideMotor;
-    private Encoder liftEncoder;
     private int currentLiftTick;
-
-    // way to make this private?
-    public int pixelTickHeight = 300; // got this from Tomahawk
+    private int pixelTickHeight = 300; // got this from Tomahawk
 
     public SlidesSubsystem(DcMotorEx leftSlideMotor, DcMotorEx rightSlideMotor) {
         this.leftSlideMotor = leftSlideMotor;
         this.rightSlideMotor = rightSlideMotor;
 
-        liftEncoder = new Encoder(rightSlideMotor);
-        currentLiftTick = liftEncoder.getCurrentPosition();
+//        this.liftEncoder = liftEncoder;
+//        liftEncoder.setDirection(Encoder.Direction.FORWARD);
+
+        currentLiftTick = 0; //liftEncoder.getCurrentPosition();
     }
 
     // TODO: Implement with TeleOp with HardwareMap
@@ -30,8 +29,8 @@ public class SlidesSubsystem extends SubsystemBase {
     // }
 
     public void reset() {
-        rightSlideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftSlideMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightSlideMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftSlideMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         rightSlideMotor.setPower(0);
         leftSlideMotor.setPower(0);
@@ -46,10 +45,12 @@ public class SlidesSubsystem extends SubsystemBase {
     }
 
     public void adjustUp() {
+        currentLiftTick = rightSlideMotor.getCurrentPosition();
         setLiftPosition(currentLiftTick + pixelTickHeight); // move up by a pixel? I really need a robot for this...
     }
 
     public void adjustDown() {
+        currentLiftTick = rightSlideMotor.getCurrentPosition();
         setLiftPosition(currentLiftTick - pixelTickHeight); // move down by a pixel
     }
 }

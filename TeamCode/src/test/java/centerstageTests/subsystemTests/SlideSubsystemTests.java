@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,6 +21,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public class SlideSubsystemTests {
     // Figure out corner cases for adjust up; like going above limit for slide height
     // I think I need a transport constants of some sort with Ticks per revolution, max heights, etc.
+    // need to figure out how to test the Encoder class, injecting mocks somehow?
     @Mock
     DcMotorEx leftSlideMotor;
     @Mock
@@ -45,23 +47,17 @@ public class SlideSubsystemTests {
     // We need to iterate through slide heights, best way to do this? Could iterate through with one button, a bumper?
     @Test
     public void testIdealAdjustUp() {
+        when(rightSlideMotor.getCurrentPosition()).thenReturn(100);
         slideSub.adjustUp();
-        // at starting pos
-        when(rightSlideMotor.getCurrentPosition()).thenReturn(0);
-        when(rightSlideMotor.getCurrentPosition()).thenReturn(0);
-        int liftCurPos = rightSlideMotor.getCurrentPosition();
-        verify(leftSlideMotor).setTargetPosition(liftCurPos + slideSub.pixelTickHeight);
-        verify(rightSlideMotor).setTargetPosition(liftCurPos + slideSub.pixelTickHeight);
-
+        verify(rightSlideMotor).setTargetPosition(400);
+        verify(leftSlideMotor).setTargetPosition(400);
     }
     @Test
     public void testIdealAdjustDown() {
-        slideSub.adjustDown();
         when(rightSlideMotor.getCurrentPosition()).thenReturn(300);
-        when(leftSlideMotor.getCurrentPosition()).thenReturn(300);
-        int liftCurPos = rightSlideMotor.getCurrentPosition();
-        verify(leftSlideMotor).setTargetPosition(liftCurPos - slideSub.pixelTickHeight);
-        verify(rightSlideMotor).setTargetPosition(liftCurPos - slideSub.pixelTickHeight);
+        slideSub.adjustDown();
+        verify(rightSlideMotor).setTargetPosition(0);
+        verify(leftSlideMotor).setTargetPosition(0);
     }
     @Test
     public void testSetLiftPos() {
