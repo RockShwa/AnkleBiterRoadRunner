@@ -34,8 +34,6 @@ public class SlidesSubsystem extends SubsystemBase {
 
         rightSlideMotor.setPower(0);
         leftSlideMotor.setPower(0);
-
-        rightSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     // Would probably need to do a PID controller with this in real life

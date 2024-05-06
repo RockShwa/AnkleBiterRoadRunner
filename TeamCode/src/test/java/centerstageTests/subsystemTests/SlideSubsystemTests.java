@@ -37,11 +37,10 @@ public class SlideSubsystemTests {
     @Test
     public void testResetSlideMotors() {
         slideSub.reset();
-        verify(rightSlideMotor).setDirection(DcMotorSimple.Direction.REVERSE);
-        verify(leftSlideMotor).setDirection(DcMotorSimple.Direction.FORWARD);
+        verify(rightSlideMotor).setDirection(DcMotorSimple.Direction.FORWARD);
+        verify(leftSlideMotor).setDirection(DcMotorSimple.Direction.REVERSE);
         verify(rightSlideMotor).setPower(0);
         verify(leftSlideMotor).setPower(0);
-        verify(rightSlideMotor).setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     // We need to iterate through slide heights, best way to do this? Could iterate through with one button, a bumper?
