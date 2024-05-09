@@ -18,10 +18,7 @@ public class SlidesSubsystem extends SubsystemBase {
         this.leftSlideMotor = leftSlideMotor;
         this.rightSlideMotor = rightSlideMotor;
 
-//        this.liftEncoder = liftEncoder;
-//        liftEncoder.setDirection(Encoder.Direction.FORWARD);
-
-        currentLiftTick = 0; //liftEncoder.getCurrentPosition();
+        currentLiftTick = 0;
     }
 
     // TODO: Implement with TeleOp with HardwareMap

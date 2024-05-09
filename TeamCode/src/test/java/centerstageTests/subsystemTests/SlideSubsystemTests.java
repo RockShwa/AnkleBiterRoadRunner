@@ -22,6 +22,7 @@ public class SlideSubsystemTests {
     // Figure out corner cases for adjust up; like going above limit for slide height
     // I think I need a transport constants of some sort with Ticks per revolution, max heights, etc.
     // need to figure out how to test the Encoder class, injecting mocks somehow?
+    // Link intake and outtake in teleop
     @Mock
     DcMotorEx leftSlideMotor;
     @Mock

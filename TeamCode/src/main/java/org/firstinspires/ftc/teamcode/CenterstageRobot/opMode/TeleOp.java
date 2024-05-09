@@ -9,8 +9,12 @@ import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 
+import org.firstinspires.ftc.teamcode.CenterstageRobot.hardware.BucketHardware;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.hardware.IntakeHardware;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.hardware.SlidesHardware;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.BucketSubsystem;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.SlidesSubsystem;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.StatesSubsystem;
 
 public class TeleOp extends CommandOpMode {
@@ -18,19 +22,26 @@ public class TeleOp extends CommandOpMode {
     private StatesSubsystem states;
     private IntakeSubsystem intake;
 
-    // -- Hardware --
+    // TODO couple these into a transport subsystem/command?
+    private BucketSubsystem bucket;
+    private SlidesSubsystem slides;
 
+    // -- Hardware --
     private IntakeHardware intakeHardware;
+    private BucketHardware bucketHardware;
+    private SlidesHardware slidesHardware;
 
     // -- Gamepad --
     private GamepadEx driverPad;
     private Trigger intakeButton;
     private Button incrementIntake;
     private Button fullExtendIntake;
+    private Button flipWrist;
+    private Button slidesUp;
+    private Button slidesDown;
 
     // might need a switch states trigger
     // private Trigger switchIntakeState;
-
 
     @Override
     public void initialize() {
@@ -39,9 +50,13 @@ public class TeleOp extends CommandOpMode {
         driverPad = new GamepadEx(gamepad1);
 
         intakeHardware = new IntakeHardware(hardwareMap);
+        bucketHardware = new BucketHardware(hardwareMap);
+        slidesHardware = new SlidesHardware(hardwareMap);
 
         states = new StatesSubsystem();
         intake = new IntakeSubsystem(intakeHardware);
+        bucket = new BucketSubsystem(bucketHardware);
+        slides = new SlidesSubsystem(slidesHardware);
 
         register(states, intake);
 

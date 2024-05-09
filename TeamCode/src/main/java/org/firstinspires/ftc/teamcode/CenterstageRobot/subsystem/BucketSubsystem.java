@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.CenterstageRobot.hardware.BucketHardware;
 import org.firstinspires.ftc.teamcode.util.Encoder;
 
 // TODO LIST
@@ -24,10 +25,14 @@ public class BucketSubsystem extends SubsystemBase {
         this.flipAxonLeft = flipAxonLeft;
         this.flipAxonRight = flipAxonRight;
     }
-// TODO: Implement this when you do teleop for outtake
-//    public BucketSubsystem(OuttakeHardware outtakeHardware) {
-//
-//    }
+
+    public BucketSubsystem(BucketHardware bucketHardware) {
+        this.wristAxon = bucketHardware.wristAxon;
+        this.bucketServoTop = bucketHardware.bucketServoTop;
+        this.bucketServoBottom = bucketHardware.bucketServoBottom;
+        this.flipAxonLeft = bucketHardware.flipAxonLeft;
+        this.flipAxonRight = bucketHardware.flipAxonRight;
+    }
     public void wristToFull() {
         // this would change for an actual robot, 1 is an obscure value
         wristAxon.setPosition(1);
