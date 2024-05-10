@@ -10,23 +10,16 @@ import org.firstinspires.ftc.teamcode.CenterstageRobot.hardware.IntakeHardware;
 public class IntakeSubsystem extends SubsystemBase {
     private final Servo intakeAxonServo;
     private final DcMotorEx intakeRollerMotor;
-    private final Servo topBucketServo;
-    private final Servo bottomBucketServo;
 
-    public IntakeSubsystem(final Servo servo, final DcMotorEx rollerMotor,
-                           final Servo topBucketServo, final Servo bottomBucketServo) {
+    public IntakeSubsystem(final Servo servo, final DcMotorEx rollerMotor) {
         intakeAxonServo = servo;
         intakeRollerMotor = rollerMotor;
-        this.topBucketServo = topBucketServo;
-        this.bottomBucketServo = bottomBucketServo;
 
     }
 
     public IntakeSubsystem(IntakeHardware intakeHardware) {
         intakeAxonServo = intakeHardware.intakeAxonServo;
         intakeRollerMotor = intakeHardware.intakeRollerMotor;
-        topBucketServo = intakeHardware.topBucketServo;
-        bottomBucketServo = intakeHardware.bottomBucketServo;
     }
 
     public void extend() {
@@ -57,9 +50,7 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeRollerMotor.setPower(0);
     }
 
-    public void resetMotorAndBucket() {
-        topBucketServo.setPosition(0);
-        bottomBucketServo.setPosition(0);
+    public void resetMotor() {
         intakeRollerMotor.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
@@ -69,13 +60,12 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void intakeOn() {
-        resetMotorAndBucket();
         intakeRollerMotor.setPower(1);
     }
 
     public void resetAll() {
         resetAxonPosition();
-        resetMotorAndBucket();
+        resetMotor();
     }
 
     // helper method for this class and users :)

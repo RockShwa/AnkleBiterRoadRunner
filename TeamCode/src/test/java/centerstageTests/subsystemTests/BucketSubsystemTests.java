@@ -1,6 +1,8 @@
 package centerstageTests.subsystemTests;
 
 import static org.mockito.Mockito.*;
+
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.configuration.annotations.ServoType;
 
@@ -43,5 +45,22 @@ public class BucketSubsystemTests {
         bucketSub.flipWrist();
         verify(flipAxonLeft).setPosition(anyDouble());
         verify(flipAxonRight).setPosition(anyDouble());
+    }
+
+    @Test
+    public void whenResetCalledBucketInternalResets() {
+        bucketSub.resetBucketInternal();
+        verify(bucketServoTop).setPosition(0);
+        verify(bucketServoBottom).setPosition(0);
+    }
+
+    @Test
+    public void testTotalReset() {
+        bucketSub.resetAll();
+        verify(bucketServoTop).setPosition(0);
+        verify(bucketServoBottom).setPosition(0);
+        verify(flipAxonLeft).setPosition(0);
+        verify(flipAxonRight).setPosition(0);
+        verify(wristAxon).setPosition(0);
     }
 }

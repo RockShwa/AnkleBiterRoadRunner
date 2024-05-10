@@ -25,17 +25,11 @@ public class IntakeSubsystemTests {
     @Mock
     DcMotorEx intakeRollerMotor;
 
-    @Mock
-    Servo topBucketServo;
-
-    @Mock
-    Servo bottomBucketServo;
-
     private IntakeSubsystem intakeSub;
 
     @BeforeEach
     public void setUp() {
-        intakeSub = new IntakeSubsystem(axonServo, intakeRollerMotor, topBucketServo, bottomBucketServo);
+        intakeSub = new IntakeSubsystem(axonServo, intakeRollerMotor);
     }
 
     @Test
@@ -73,10 +67,8 @@ public class IntakeSubsystemTests {
     }
 
     @Test
-    public void whenResetCalledBucketAndMotorResets() {
-        intakeSub.resetMotorAndBucket();
-        verify(topBucketServo).setPosition(0);
-        verify(bottomBucketServo).setPosition(0);
+    public void whenResetCalledMotorResets() {
+        intakeSub.resetMotor();
         verify(intakeRollerMotor).setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
@@ -113,7 +105,5 @@ public class IntakeSubsystemTests {
         verify(axonServo).setPosition(StatesSubsystem.IntakeState.INTAKE_START.getAxonPos());
         verify(axonServo).setDirection(Servo.Direction.FORWARD);
         verify(intakeRollerMotor).setDirection(DcMotorSimple.Direction.FORWARD);
-        verify(topBucketServo).setPosition(0);
-        verify(bottomBucketServo).setPosition(0);
     }
 }

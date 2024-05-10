@@ -8,6 +8,7 @@ import com.arcrobotics.ftclib.command.button.Button;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.CenterstageRobot.hardware.BucketHardware;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.hardware.IntakeHardware;
@@ -36,7 +37,7 @@ public class TeleOp extends CommandOpMode {
     private Trigger intakeButton;
     private Button incrementIntake;
     private Button fullExtendIntake;
-    private Button flipWrist;
+    private Trigger flipWrist;
     private Button slidesUp;
     private Button slidesDown;
 
@@ -61,9 +62,12 @@ public class TeleOp extends CommandOpMode {
         register(states, intake);
 
         intakeButton = new Trigger(() -> gamepad1.right_trigger > 0.3);
-        incrementIntake = driverPad.getGamepadButton(GamepadKeys.Button.A);
+        incrementIntake = driverPad.getGamepadButton(GamepadKeys.Button.X);
         fullExtendIntake = driverPad.getGamepadButton(GamepadKeys.Button.B);
 
+        flipWrist = new Trigger(() -> gamepad1.left_trigger > 0.3);
+        slidesUp = driverPad.getGamepadButton(GamepadKeys.Button.Y);
+        slidesDown = driverPad.getGamepadButton(GamepadKeys.Button.A);
 
         // When pressed, turn on extend, when pressed again, do resetAxon
         fullExtendIntake.toggleWhenPressed(
@@ -77,7 +81,10 @@ public class TeleOp extends CommandOpMode {
 
         // This is apparently set to be interruptable, test that later?
         intakeButton.whenActive(
-                new InstantCommand(() -> intake.intakeOn())
+                new SequentialCommandGroup(
+                        new InstantCommand(() -> bucket.resetBucketInternal()),
+                        new InstantCommand(() -> intake.intakeOn())
+                )
         )
                 .whenInactive(
                         new SequentialCommandGroup(
@@ -86,5 +93,21 @@ public class TeleOp extends CommandOpMode {
                                 new InstantCommand(() -> intake.resetAxonPosition())
                         )
                 );
+
+        // not sure this is the correct active command, need to turn trigger on and flip whole arm, when pressed again, reset
+        // need to make sure slides are in pos first, before this will execute
+        flipWrist.whenActive(
+                new SequentialCommandGroup(
+                        new InstantCommand(() -> bucket.flipWrist()),
+                        new InstantCommand(() -> bucket.wristToFull())
+                )
+        )
+                .whenInactive(
+                        new InstantCommand(() -> bucket.resetAll())
+                );
+
+        slidesUp.whenHeld(new InstantCommand(() -> slides.adjustUp()));
+
+        slidesDown.whenHeld(new InstantCommand(() -> slides.adjustDown()));
     }
 }

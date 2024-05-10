@@ -7,9 +7,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.hardware.BucketHardware;
 import org.firstinspires.ftc.teamcode.util.Encoder;
 
-// TODO LIST
-// Put the bucket functions in the intake into here (the reset servo ones)
-
 public class BucketSubsystem extends SubsystemBase {
     private final Servo wristAxon;
     private final Servo bucketServoTop;
@@ -44,4 +41,16 @@ public class BucketSubsystem extends SubsystemBase {
         flipAxonLeft.setPosition(1);
     }
 
+    // resets the two servos within the bucket, done before intake
+    public void resetBucketInternal() {
+        bucketServoTop.setPosition(0);
+        bucketServoBottom.setPosition(0);
+    }
+
+    public void resetAll() {
+        resetBucketInternal();
+        flipAxonRight.setPosition(0);
+        flipAxonLeft.setPosition(0);
+        wristAxon.setPosition(0);
+    }
 }
