@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.oldCode.oldIntake.Intake;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.StatesSubsystem;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystemConstants.IntakeConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,14 +36,14 @@ public class IntakeSubsystemTests {
     @Test
     public void testServoFullExtension() {
         intakeSub.extend();
-        verify(axonServo).setPosition(StatesSubsystem.IntakeState.INTAKE_EXTENDED.getAxonPos());
+        verify(axonServo).setPosition(IntakeConstants.IntakeState.INTAKE_EXTENDED.getAxonPos());
     }
 
     @Test
     public void testServoCanIncrementToFullPos() {
         when(axonServo.getPosition()).thenReturn(Intake.servoAngleToPos(170));
         intakeSub.incrementPos();
-        verify(axonServo).setPosition(StatesSubsystem.IntakeState.INTAKE_EXTENDED.getAxonPos());
+        verify(axonServo).setPosition(IntakeConstants.IntakeState.INTAKE_EXTENDED.getAxonPos());
     }
 
     @Test
@@ -75,7 +76,7 @@ public class IntakeSubsystemTests {
     @Test
     public void testServoCanResetPosition() {
         intakeSub.resetAxonPosition();
-        verify(axonServo).setPosition(StatesSubsystem.IntakeState.INTAKE_START.getAxonPos());
+        verify(axonServo).setPosition(IntakeConstants.IntakeState.INTAKE_START.getAxonPos());
     }
 
     @Test
@@ -102,7 +103,7 @@ public class IntakeSubsystemTests {
     @Test
     public void testResetAll() {
         intakeSub.resetAll();
-        verify(axonServo).setPosition(StatesSubsystem.IntakeState.INTAKE_START.getAxonPos());
+        verify(axonServo).setPosition(IntakeConstants.IntakeState.INTAKE_START.getAxonPos());
         verify(axonServo).setDirection(Servo.Direction.FORWARD);
         verify(intakeRollerMotor).setDirection(DcMotorSimple.Direction.FORWARD);
     }

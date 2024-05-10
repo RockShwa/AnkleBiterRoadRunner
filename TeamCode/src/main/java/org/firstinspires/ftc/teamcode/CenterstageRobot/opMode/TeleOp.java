@@ -4,11 +4,11 @@ import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitUntilCommand;
 import com.arcrobotics.ftclib.command.button.Button;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.CenterstageRobot.hardware.BucketHardware;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.hardware.IntakeHardware;
@@ -17,15 +17,20 @@ import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.BucketSubsystem
 import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.SlidesSubsystem;
 import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem.StatesSubsystem;
+import org.firstinspires.ftc.teamcode.CenterstageRobot.subsystemConstants.IntakeConstants;
 
 public class TeleOp extends CommandOpMode {
     // -- Subsystems --
-    private StatesSubsystem states;
     private IntakeSubsystem intake;
 
     // TODO couple these into a transport subsystem/command?
     private BucketSubsystem bucket;
     private SlidesSubsystem slides;
+
+    private StatesSubsystem states;
+
+    // -- States/Constants --
+    private IntakeConstants intakeConstants;
 
     // -- Hardware --
     private IntakeHardware intakeHardware;
@@ -41,9 +46,6 @@ public class TeleOp extends CommandOpMode {
     private Button slidesUp;
     private Button slidesDown;
 
-    // might need a switch states trigger
-    // private Trigger switchIntakeState;
-
     @Override
     public void initialize() {
         // Initialize
@@ -54,12 +56,14 @@ public class TeleOp extends CommandOpMode {
         bucketHardware = new BucketHardware(hardwareMap);
         slidesHardware = new SlidesHardware(hardwareMap);
 
-        states = new StatesSubsystem();
+        intakeConstants = new IntakeConstants();
+
         intake = new IntakeSubsystem(intakeHardware);
         bucket = new BucketSubsystem(bucketHardware);
         slides = new SlidesSubsystem(slidesHardware);
+        states = new StatesSubsystem();
 
-        register(states, intake);
+        register(intake, bucket, slides);
 
         intakeButton = new Trigger(() -> gamepad1.right_trigger > 0.3);
         incrementIntake = driverPad.getGamepadButton(GamepadKeys.Button.X);
@@ -83,12 +87,12 @@ public class TeleOp extends CommandOpMode {
         intakeButton.whenActive(
                 new SequentialCommandGroup(
                         new InstantCommand(() -> bucket.resetBucketInternal()),
+                        new InstantCommand(() -> states.changeLiftState(StatesSubsystem.LiftState.INTAKING)),
                         new InstantCommand(() -> intake.intakeOn())
                 )
         )
                 .whenInactive(
                         new SequentialCommandGroup(
-                                new InstantCommand(() -> states.changeIntakeState(StatesSubsystem.IntakeState.REVERSE)),
                                 new InstantCommand(() -> intake.runMotorInReverseFor2Seconds()),
                                 new InstantCommand(() -> intake.resetAxonPosition())
                         )
@@ -98,15 +102,18 @@ public class TeleOp extends CommandOpMode {
         // need to make sure slides are in pos first, before this will execute
         flipWrist.whenActive(
                 new SequentialCommandGroup(
+                        new InstantCommand(() -> states.changeDepositState(StatesSubsystem.DepositState.IN_PROGRESS)),
                         new InstantCommand(() -> bucket.flipWrist()),
-                        new InstantCommand(() -> bucket.wristToFull())
+                        new InstantCommand(() -> bucket.wristToFull()),
+                        new InstantCommand(() -> states.changeDepositState(StatesSubsystem.DepositState.READY))
                 )
         )
                 .whenInactive(
                         new InstantCommand(() -> bucket.resetAll())
                 );
 
-        slidesUp.whenHeld(new InstantCommand(() -> slides.adjustUp()));
+        slidesUp.whenHeld(
+                new InstantCommand(() -> slides.adjustUp()));
 
         slidesDown.whenHeld(new InstantCommand(() -> slides.adjustDown()));
     }

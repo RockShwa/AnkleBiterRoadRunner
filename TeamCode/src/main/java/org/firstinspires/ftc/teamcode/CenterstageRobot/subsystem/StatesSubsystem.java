@@ -3,27 +3,33 @@ package org.firstinspires.ftc.teamcode.CenterstageRobot.subsystem;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 
 public class StatesSubsystem extends SubsystemBase {
-    // Need to test for intermediate values
-    private static final double[] axonPositions = {IntakeSubsystem.servoAngleToPos(30), IntakeSubsystem.servoAngleToPos(180)};
-    public static enum IntakeState {
-        INTAKE_START(axonPositions[0]),
-        INTAKE_EXTENDED(axonPositions[1]),
-        REVERSE(axonPositions[0]);
+    // States for slides: in progress, ready (for deposit)
+    // States for deposit: in progress, ready (to flip back)
 
-        private final double axonServoPos;
-
-        IntakeState(double axonServoPos) {
-            this.axonServoPos = axonServoPos;
-        }
-
-        public double getAxonPos() {
-            return axonServoPos;
-        }
+    public enum LiftState {
+        INTAKING, DEPOSIT
     }
 
-    public IntakeState intakeState = IntakeState.INTAKE_START;
+    public enum DepositState {
+        // Ready to flip back
+        READY,
+        // In the process of depositing
+        IN_PROGRESS
+    }
 
-    public void changeIntakeState(IntakeState newState) {
-        intakeState = newState;
+    public LiftState liftState;
+    public DepositState depositState;
+
+    public StatesSubsystem() {
+        liftState = LiftState.INTAKING;
+        depositState = DepositState.READY;
+    }
+
+    public void changeLiftState(LiftState newState) {
+        liftState = newState;
+    }
+
+    public void changeDepositState(DepositState newState) {
+        depositState = newState;
     }
 }

@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -22,9 +23,9 @@ public class SlideSubsystemTests {
     // Figure out corner cases for adjust up; like going above limit for slide height
     // I think I need a transport constants of some sort with Ticks per revolution, max heights, etc.
     // need to figure out how to test the Encoder class, injecting mocks somehow?
-    // Link intake and outtake in teleop
     @Mock
     DcMotorEx leftSlideMotor;
+
     @Mock
     DcMotorEx rightSlideMotor;
 
