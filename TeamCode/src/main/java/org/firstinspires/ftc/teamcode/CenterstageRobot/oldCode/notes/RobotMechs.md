@@ -6,6 +6,7 @@ Spin on same axel, same speed.
 - Axon servo for the dropdown to stack intake (first mode), degree of rotation is from 30 degrees to 150 degrees for the stack.
 Second mode (reach ground) is from 30 degrees to 180 degrees. 30 is start position
   - Do enum for the mode
+  - 192.168.43.1:8080/dash
 
 ## Questions
 - Does the one motor power both rollers? If so, how?
