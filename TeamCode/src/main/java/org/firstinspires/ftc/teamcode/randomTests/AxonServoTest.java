@@ -8,6 +8,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp
 public class AxonServoTest extends LinearOpMode {
+    /*
+    Notes from test:
+    - I think ServoEx gets actual current position? If so, change that in intake subsystem
+     */
     ServoEx axonServo;
     @Override
     public void runOpMode() throws InterruptedException {
